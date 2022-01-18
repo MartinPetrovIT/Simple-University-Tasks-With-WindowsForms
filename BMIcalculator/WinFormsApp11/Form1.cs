@@ -12,17 +12,17 @@ namespace WinFormsApp11
 {
     public partial class Form1 : Form
     {
-        
+
         const int MaxNormalBMI = 25;
         const string Message1 = "Нормалният ИТМ за вашата възрастова група е между {0}-{1}";
         const string Message5 = "Вашето тегло: ";
-        const string Message2= "Поднормено тегло";
-        const string Message3= "Нормално тегло";
-        const string Message4= "Наднормено тегло";
+        const string Message2 = "Поднормено тегло";
+        const string Message3 = "Нормално тегло";
+        const string Message4 = "Наднормено тегло";
         public Form1()
         {
             InitializeComponent();
-            
+
             button2.Enabled = false;
             textBox1.Tag = false;
             textBox2.Tag = false;
@@ -39,7 +39,7 @@ namespace WinFormsApp11
                   (
                    (bool)(textBox1.Tag) &&
                    (bool)(textBox2.Tag) &&
-                   (bool)(textBox3.Tag) 
+                   (bool)(textBox3.Tag)
                    );
 
         }
@@ -54,29 +54,39 @@ namespace WinFormsApp11
         }
         private void textBox_Validating(object sender, CancelEventArgs e)
         {
+
+
             TextBox tb = (TextBox)sender;
             double heigth;
             var IsValid = double.TryParse(tb.Text, out heigth);
-            if (tb.Text.Length == 0 )
+
+            if (tb.Text.Length == 0)
             {
+
                 tb.BackColor = Color.Red;
                 tb.Tag = false;
             }
-            else if (!IsValid)
+            if (!IsValid)
             {
+
                 MessageBox.Show("Грешка при въвеждането на данни в полето 'Височина'!");
                 tb.BackColor = Color.Red;
                 tb.Clear();
                 tb.Tag = false;
+
+
             }
             else if (IsValid)
             {
                 if (heigth < 100)
                 {
+
                     MessageBox.Show("Минималнa височина 100 !");
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
+
                 }
                 else if (heigth > 220)
                 {
@@ -84,18 +94,29 @@ namespace WinFormsApp11
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
+
+                }
+                else
+                {
+
+                    tb.BackColor = System.Drawing.SystemColors.Window;
+                    tb.Tag = true;
+
                 }
             }
-         
-                tb.BackColor = System.Drawing.SystemColors.Window;
-                tb.Tag = true;
-       
+
 
             Validator();
+
+
+
 
         }
         private void textBox2_Validating(object sender, CancelEventArgs e)
         {
+
+
             TextBox tb = (TextBox)sender;
             double width;
             var IsValid = double.TryParse(tb.Text, out width);
@@ -105,42 +126,59 @@ namespace WinFormsApp11
                 tb.BackColor = Color.Red;
                 tb.Tag = false;
             }
-            else if (!IsValid)
+            if (!IsValid)
             {
+
                 MessageBox.Show("Грешка при въвеждането на данни в полето 'Килограми'!");
                 tb.BackColor = Color.Red;
                 tb.Clear();
                 tb.Tag = false;
+
             }
             else if (IsValid)
             {
                 if (width < 30)
                 {
+
                     MessageBox.Show("Минимални килограми 30 !");
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
                 }
                 else if (width > 150)
                 {
+
                     MessageBox.Show("Максимални килограми 150 !");
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
+                }
+                else
+                {
+
+                    tb.BackColor = System.Drawing.SystemColors.Window;
+                    tb.Tag = true;
+
                 }
             }
-           
-                tb.BackColor = System.Drawing.SystemColors.Window;
-                tb.Tag = true;
-          
+
+
+
             Validator();
 
         }
 
         private void textBox3_Validating(object sender, CancelEventArgs e)
         {
+
+
             TextBox tb = (TextBox)sender;
+
             int age;
+
+
             var IsValid = int.TryParse(tb.Text, out age);
 
             if (tb.Text.Length == 0)
@@ -148,43 +186,55 @@ namespace WinFormsApp11
                 tb.BackColor = Color.Red;
                 tb.Tag = false;
             }
-            else if (!IsValid)
+            if (!IsValid)
             {
+
                 MessageBox.Show("Грешка при въвеждането на данни в полето 'Години'!");
                 tb.BackColor = Color.Red;
                 tb.Clear();
                 tb.Tag = false;
+
             }
             else if (IsValid)
             {
                 if (age < 18)
                 {
+
                     MessageBox.Show("Минимални години 18 !");
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
                 }
                 else if (age > 100)
                 {
+
                     MessageBox.Show("Максимални години 100 !");
                     tb.BackColor = Color.Red;
                     tb.Clear();
                     tb.Tag = false;
+
+                }
+                else
+                {
+                    tb.BackColor = System.Drawing.SystemColors.Window;
+                    tb.Tag = true;
+
+
                 }
             }
-           
-                tb.BackColor = System.Drawing.SystemColors.Window;
-                tb.Tag = true;
-            
+
+
 
             Validator();
+
 
         }
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+
             StringBuilder sb = new StringBuilder();
             double heigth = double.Parse(textBox1.Text);
             int age = int.Parse(textBox3.Text);
@@ -194,12 +244,12 @@ namespace WinFormsApp11
             double bmi = width / (heigth * heigth);
             bmi = Math.Round(bmi, 2);
 
-           
+
 
             sb.AppendLine($"Вашият ИТМ е: {bmi}");
             var che = ChecksAgeGroup(age);
 
-            
+
 
             sb.AppendLine(string.Format(Message1, (che - 5), (che)));
             sb.Append(Message5);
@@ -220,7 +270,7 @@ namespace WinFormsApp11
                 sb.Append(Message3);
                 pictureBox1.Image = imageList1.Images[0];
             }
-         
+
 
 
             richTextBox1.Text = sb.ToString().TrimEnd();
@@ -252,10 +302,10 @@ namespace WinFormsApp11
                 return MaxNormalBMI + 3;
             else if (age >= 55 && age <= 64)
                 return MaxNormalBMI + 4;
-           
-                return MaxNormalBMI + 5;
+
+            return MaxNormalBMI + 5;
         }
 
-      
+
     }
 }
